@@ -1,0 +1,36 @@
+#!/bin/bash
+
+# Database connection details
+DB_HOST="localhost"
+DB_PORT="3306"
+DB_USER="root"
+DB_PASS="yousefsaber_1999"
+DB_NAME="university_case_study"
+
+# Backup directory
+BACKUP_DIR="D:/New Folder/backup"
+
+# Date format for backup file
+DATE=$(date +"%Y-%m-%d_%H-%M-%S")
+
+# Backup file name
+BACKUP_FILE="$BACKUP_DIR/$DB_NAME-$DATE.sql"
+
+# Check if the backup directory exists, otherwise create it
+if [ ! -d "$BACKUP_DIR" ]; then
+    mkdir -p "$BACKUP_DIR"
+    if [ $? -ne 0 ]; then
+        echo "Failed to create backup directory: $BACKUP_DIR"
+        exit 1
+    fi
+fi
+
+# Create a backup using mysqldump
+mysqldump -h "$DB_HOST" -P "$DB_PORT" -u "$DB_USER" -p"$DB_PASS" "$DB_NAME" > "$BACKUP_FILE"
+
+# Check if the backup was successful
+if [ $? -eq 0 ]; then
+    echo "Backup completed successfully: $BACKUP_FILE"
+else
+    echo "Backup failed"
+fi

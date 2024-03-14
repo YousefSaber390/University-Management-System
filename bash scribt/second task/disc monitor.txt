@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Email address to receive alerts
+recipient_email="yosefsaber390@gmail.com"
+log_file="D:/New Folder/backup.log"
+# Function to monitor disk usage
+monitor_disk_usage() {
+    echo "Disk Usage:"
+    df -h | awk 'NR==2 {print "Used: " $5}'
+    disk_usage=$(df -h | awk 'NR==2 {print $5}' | sed 's/%//')
+    if [ $disk_usage -gt 70 ]; then
+        echo "Disk usage is above 70%!"
+        # Send email alert
+        echo "Disk usage is above 70% on $(hostname)" | mail -s "Disk Alert" "$recipient_email"
+        echo "Disk usage is above 70% on $(hostname)" >> "${log_file}"
+
+    fi
+}
+
+# Main function to run all monitoring functions
+main() {
+    monitor_disk_usage
+}
+
+# Execute main function
+main
+
