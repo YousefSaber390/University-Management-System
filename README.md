@@ -1,5 +1,4 @@
 # University-Management-System
-# University Management System
 
 This repository encompasses the development of a comprehensive University Management System, illustrating various facets of software engineering such as database design, SQL implementation, PL/SQL scripting, automation scripting, and Java application development.
 
